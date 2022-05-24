@@ -6,54 +6,50 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="plParser.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="plParser"> 
+        Title="Playlist URL Parser (https://www.boomplay.com)"> 
 
     <Design.DataContext>
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-    <Grid Margin="2">
-    <Grid.Styles>
-        <Style Selector="TextBlock.margins">
-            <Setter Property="Padding" Value="2,3,3,3"/>
-        </Style>
-    </Grid.Styles>
-    <Grid.ColumnDefinitions>
-			<ColumnDefinition Width="2*" />
-			<ColumnDefinition Width="1*" />
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-			<RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-		</Grid.RowDefinitions>
+    <StackPanel HorizontalAlignment="Center" Margin="2" Name="AllStack">
+
+    <StackPanel Orientation = "Horizontal" Name="UrlStack">
+    <Label Content="Enter the Playlist Url in the field" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <TextBox Text="{Binding Input}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </StackPanel>
+
+    <StackPanel Orientation = "Horizontal" Name="ButtonStack">
     <Button 
-    Grid.Column="1" Grid.Row="2"
     Command="{Binding OnClickMe}"
     HorizontalAlignment="Center" 
     VerticalAlignment="Center">
             Parse PlayList
     </Button>
-    <ListBox Items="{Binding Songs}" Grid.Column="0" Grid.Row="0" Grid.IsSharedSizeScope="True">
+    <TextBlock Classes="margins" Text="{Binding Message}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </StackPanel>
+
+    <StackPanel Orientation = "Horizontal" Name="PlaylistStack">
+    <Image Source="{Binding PlayList.Avatara}" Width="200" Height="200"></Image>
+    <TextBlock Classes="margins" Text="{Binding PlayList.Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </StackPanel>
+    
+    <ListBox Items="{Binding Songs}" Grid.IsSharedSizeScope="True"
+    ScrollViewer.VerticalScrollBarVisibility="Auto">
         <ListBox.ItemTemplate>    
         <DataTemplate>
-                   <Grid Margin="8,8">
+                   <Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="*" SharedSizeGroup="SongName"/>
 							<ColumnDefinition Width="*" SharedSizeGroup="ArtistName"/>
                             <ColumnDefinition Width="*" SharedSizeGroup="Duration"/>
 						</Grid.ColumnDefinitions>
-						<TextBlock Grid.Column="0" Text="{Binding Name}" />
-						<TextBlock Grid.Column="1" Text="{Binding Artist}" />
+						<TextBlock Grid.Column="0" Margin="0,0,3,0" Text="{Binding Name}" />
+						<TextBlock Grid.Column="1" Margin="0,0,3,0" Text="{Binding Artist}" />
                         <TextBlock Grid.Column="2" Text="{Binding Duration}" />
 					</Grid>
         </DataTemplate>
     </ListBox.ItemTemplate>
     </ListBox>
-    <Image Source="{Binding PlayList.Avatara}" Grid.Column="0" Grid.Row="1" Width="200" Height="200"></Image>
-    <TextBlock Classes="margins" Grid.Column="0" Grid.Row="2" Text="{Binding PlayList.Name}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    <Label Grid.Column="1" Grid.Row="0" Content="Enter the Playlist Url in the field" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    <TextBlock Classes="margins" Grid.Column="1" Grid.Row="3" Text="{Binding Message}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Input}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-    </Grid>
+
+    </StackPanel>
 </Window>

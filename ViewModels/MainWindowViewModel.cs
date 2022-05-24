@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Net.Sockets;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
@@ -19,13 +20,11 @@ namespace plParser.ViewModels
         private string  input;
         private string message;
         private PlayList playList;
-        private string name;
         private ObservableCollection<Song> songs;
 
         public MainWindowViewModel()
         {
             OnClickMe = new RelayCommand(OnExecuteButtonClickEvent, o => true);
-            message = "You displayed playlist";
         }
 
         public ICommand OnClickMe { get; set; }
@@ -53,12 +52,20 @@ namespace plParser.ViewModels
         private void OnExecuteButtonClickEvent(object parameter)
         {
             Console.WriteLine(Input);
-            HtmlParser parser=new HtmlParser("https://www.boomplay.com/playlists/35900409");
+            if (String.IsNullOrEmpty(Input)) { Message="PlayList Url is empty";
+            return;}
+            try {
+            HtmlParser parser=new HtmlParser(Input);
             Songs=new ObservableCollection<Song>(parser.ParseSongs());
             PlayList=parser.ParsePlayList();
-            //PlayList.Avatara.Save(@"C:\img2.png");
             num++;
-            Message=Message+num;
+            message = "You displayed playlist";
+            Message=message+num;
+            }
+
+            catch (Exception ex) {
+                Message="Error:the url entered is incorrect or connection is absent";
+            }
         }
 
     }

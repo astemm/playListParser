@@ -36,13 +36,11 @@ namespace plParser.ViewModels
 	         imageData = webClient.DownloadData(playListUrl);
              }
 
-             //image= (System.Drawing.Bitmap)System.Drawing.Bitmap.FromFile(@"c:\uaflag.jpg", true);
              using (MemoryStream mem = new MemoryStream(imageData)) 
              {
-                //image=new Bitmap(mem);
                 avatara=new Avalonia.Media.Imaging.Bitmap(mem); 
              } 
-             var playList=new PlayList () { Name=playListName,
+             var playList=new PlayList () { Name="Playlist: "+playListName,
              Avatar=image, Avatara=avatara
              };
              Console.WriteLine(avatara.Size+playListName);
@@ -63,7 +61,7 @@ namespace plParser.ViewModels
               var song=new Song () { Id=Int32.Parse(id), Name=name, Artist=artist,
               Duration=TimeSpan.ParseExact(time,"mm\\:ss", null)};
               Songs.Add(song);
-          }
+          } ////
             foreach (Song song in Songs) {
                  Console.WriteLine(song);
             }     

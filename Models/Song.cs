@@ -17,8 +17,8 @@ namespace plParser.Models
         public string Genre { get; set; }
 
         public override string ToString () {
-            return Name+" "+Artist+" "+Duration; //"mm\\:ss"
-        }
+            return Name+" "+Artist+" "+Duration;
+        }    
   
     }
 }
